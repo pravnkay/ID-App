@@ -11,7 +11,6 @@
 			</div>
 		</nav>
 
-		<!-- Full Page Image Header with Vertically Centered Content -->
 		<header class="masthead vh-100">
 			<div class="container h-100">
 				<div class="row h-100 align-items-center">
@@ -24,7 +23,6 @@
 			</div>
 		</header>
 
-		<!-- Page Content -->
 		<section class="py-5">
 			<div class="container">
 				<h2 class="font-weight-light">Page Content</h2>
@@ -35,6 +33,7 @@
 </template>
 
 <style scoped>
+
 .masthead {
   height: 100vh;
   min-height: 500px;

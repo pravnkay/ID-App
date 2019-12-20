@@ -4,11 +4,9 @@ import NProgress from 'nprogress';
 import firebase from 'firebase';
 
 import Home from '../views/Home.vue'
-import Test from '../views/Test.vue'
 import Login from '../views/Login.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import Register from '../views/Register.vue'
-import PageNotFound from '../views/PageNotFound.vue'
 import InDetail from '../views/application/InDetail.vue'
 import Content from '../views/application/Content.vue'
 import Reveal from '../views/application/Reveal.vue'
@@ -16,22 +14,6 @@ import Reveal from '../views/application/Reveal.vue'
 Vue.use(VueRouter)
 
 const routes = [
-	{
-		path: '*',
-		name: 'PageNotFound',
-		component: PageNotFound,
-		meta: {
-			requiresGuest: true
-		}
-	},
-	{
-		path: '/test',
-		name: 'Test',
-		component: Test,
-		meta: {
-			requiresGuest: true
-		}
-	},
   {
     path: '/',
     name: 'home',

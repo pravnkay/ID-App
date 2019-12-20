@@ -108,7 +108,6 @@ export default {
 	},
 	methods: {
 		openContent: function(resource){
-			window.console.log(resource)
 			var vm = this
 			if(!this.isOnline){
 				if(!localStorage[resource]){
@@ -139,10 +138,8 @@ export default {
 					})
 				} else {
 					var data = JSON.parse(localStorage[resource])
-					window.console.log(data.data.length)
 					this.$http.get('/posts/count/'+resource)
 					.then(function (res) {
-						window.console.log(res)
 						if(data.data.length === res.data) {
 							vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
 						} else {

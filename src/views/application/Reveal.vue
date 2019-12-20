@@ -28,13 +28,10 @@ export default {
 		}
 	},
 	created() {
-		window.console.log('created')
 		var dataparsed = JSON.parse(localStorage.getItem(this.passedResource))
 		this.posts = dataparsed.data
 	},
-  mounted() {
-		window.console.log('mounted')
-		
+  mounted() {		
 		Reveal.initialize({
 			center: false,
 			width: "100%",
@@ -58,7 +55,6 @@ export default {
 			handleSlideScrolling(event.currentSlide);
 		})
 		Reveal.addEventListener("slidechanged", function(event) {
-			window.console.log('slidechanged')
 			handleSlideScrolling(event.currentSlide);
 			if (event.previousSlide) {
 				setTimeout(function() {
@@ -68,12 +64,18 @@ export default {
 		});
 	},
 	updated() {
-		window.console.log('updated')
+		
 	}
 }
 </script>
 
-<style>
+<style scoped>
+
+
+@import url("../../../node_modules/reveal.js/css/reveal.css");
+@import url("../../../node_modules/reveal.js/css/theme/white.css");
+
+
 
 #reveal {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

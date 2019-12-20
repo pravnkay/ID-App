@@ -67,7 +67,6 @@ export default {
           user => {
 						store.commit('changeloginsuccess')
 						NProgress.done()
-            window.console.log(user.email)
             this.$router.go({ path: this.$router.path })
           },
           err => {

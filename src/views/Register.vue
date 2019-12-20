@@ -21,7 +21,7 @@
 					</b-row>
 					<b-row align-h="around">
 						<b-col cols="8" lg="4" class="d-flex justify-content-between align-items-center">
-							<b-button type="submit" variant="primary">Submit</b-button>
+							<b-button v-on:click="register" type="submit" variant="primary">Submit</b-button>
 							<router-link :to="{ name: 'login'}" class="text-primary small ml-auto">Have an account ?</router-link>
 						</b-col>
 					</b-row>
@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import NProgress from 'nprogress';
+import firebase from "firebase";
+
 export default {
 	data: function() {
 		return {
@@ -45,7 +48,23 @@ export default {
 		}
 	},
 	methods: {
-		
-	}
+    register: function(e) {
+      e.preventDefault();
+			NProgress.start()
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+						NProgress.done()
+            this.$router.go({ path: this.$router.path });
+          },
+          err => {
+            alert(err.message);
+          }
+				);
+      e.preventDefault();
+    }
+  }
 }
 </script>
