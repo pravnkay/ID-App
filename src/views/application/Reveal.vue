@@ -5,7 +5,8 @@
 					<section v-for="post in this.posts"
 									:key= post.id>
 					<h4>{{post.title}}</h4>
-					<p v-html=post.content></p>
+					<hr class="styled"/>
+					<div class="post-content" v-html=post.content></div>
 					</section>
 			</div>
 		</div>
@@ -85,6 +86,14 @@ export default {
   color: #2c3e50;
 	height: 100vh;
 	width: 100vw;
+}
+
+.reveal .slides {
+	text-align: left !important;
+}
+
+hr.styled{
+	border-top: 1px solid #8c8b8b;
 }
 
 .scrollable-slide {

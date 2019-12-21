@@ -5,66 +5,51 @@
 				<div class="col-12">
 					<div class="row bg-white has-shadow">
 						<b-col>
-
-							<!-- <ul>
-								<li v-for="cat in level1Cat"
-										:key="cat.id"
-										:ref='cat.id'>{{ cat.name }} {{cat.id}}
-										
-										<ul>
-											<li v-for="c in categories"
-													:key="c.id"
-													v-if="c.parent === cat.id">{{c.name}} {{c.id}} {{c.parent}}
-
-													<ul>
-														<li v-for="c3 in categories"
-																:key="c3.id"
-																v-if="c3.parent === c.id">{{c3.name}} {{c3.id}} {{c3.parent}}
-														</li>
-													</ul>
-
-											</li>
-										</ul>
-								</li>
-							</ul> -->
-
+							
+							<h6>Select a year</h6>
 							<div>
 								<b-card no-body>
-									<b-tabs pills card vertical>
+									<b-tabs pills card>
 
-										<b-tab title="2018" active>
-
+										<b-tab v-for="year in this.years"
+														:key="year.id"
+														:title="year.value"
+														v-on:click="yearSlug = year.value">
 											<b-card-text>
-												<b-tabs pills card>	
 
-													<b-tab title="Banking" active>
-														<b-card-text>
-															<b-button class="mr-3" variant="primary" v-on:click="openContent('2018-banking')">Banking Full</b-button>
-															<b-button class="mr-3" variant="primary" v-on:click="openContent('2018-banking-sbi')">SBI</b-button>
-															<b-button class="mr-3" variant="primary" v-on:click="openContent('2018-banking-sbi')">RBI</b-button>
-														</b-card-text>
-													</b-tab>
-													<b-tab title="Sports">
-														<b-card-text>
-															<b-button class="mr-3" variant="primary" v-on:click="openContent('2018-sports')">Sports Full</b-button>
-														</b-card-text>
-													</b-tab>
+												<h6>Select a month (optional)</h6>
 
-												</b-tabs>											
+												<b-form-select v-model="monthSlug" class="mb-3">
+													<option v-for="month in months"
+																	:key="month.id"
+																	v-bind:value="month.id">{{month.value}}</option>
+												</b-form-select>
+
+															<h6>Choose a category</h6>
+															
+															<b-tabs pills card>
+																<b-tab v-for="cat in cats"
+																				:key="cat.id"
+																				:title="cat.value">
+																	<b-card-text>
+
+																		<h6>Click on a topic to read</h6>
+
+																		<b-button	class="m-2" variant="primary"
+																							v-for="subcat in cat.subcats" 
+																							:key="subcat.id"
+																							v-on:click="getContent(cat.value+'-'+subcat.value)">{{subcat.value}}</b-button>
+																		
+																	</b-card-text>
+																</b-tab>
+															</b-tabs>
+
 											</b-card-text>
 										</b-tab>
 
-										<b-tab title="2019">
-											<b-card-text>
-												To be uploaded
-											</b-card-text>
-										</b-tab>
 									</b-tabs>
 								</b-card>
 							</div>
-
-
-
 
 						</b-col>
 					</div>
@@ -92,6 +77,37 @@ export default {
 			authToken : window.$cookies.get('apiAuthToken'),
 			posts: [],
 			categories: [],
+			years: [
+				{id:1, value:'2018'},
+				{id:2, value:'2019'},
+			],
+			months: [
+				{id:'00', value:'All'},
+				{id:'01', value:'January'},
+				{id:'02', value:'February'},
+				{id:'03', value:'March'},
+				{id:'04', value:'April'},
+				{id:'05', value:'May'},
+				{id:'06', value:'June'},
+				{id:'07', value:'July'},
+				{id:'08', value:'August'},
+				{id:'09', value:'September'},
+				{id:'10', value:'October'},
+				{id:'11', value:'November'},
+				{id:'12', value:'December'},
+			],
+			cats: [
+				{id:1, value:'Banking', subcats: 	[
+																						{id:0, value:'All'},
+																						{id:1, value:'RBI'},
+																						{id:2, value:'SBI'}
+																					]},
+				{id:2, value:'Sports', subcats: 	[
+																						{id:0, value:'All'},
+																					]},
+			],
+			yearSlug: '2018',
+			monthSlug: '00'
 		}
 	},
 	computed: {
@@ -107,40 +123,30 @@ export default {
 
 	},
 	methods: {
-		openContent: function(resource){
+		resourceMaker: function(catSlug){
+			return (catSlug+'/'+this.yearSlug+'/'+this.monthSlug)
+		},
+
+		getContent: function(catSlug){
 			var vm = this
-			if(!this.isOnline){
+			const resource = vm.resourceMaker(catSlug)
+			if(!vm.isOnline){
 				if(!localStorage[resource]){
-					Swal.fire({
-						icon: 'error',
-						title: 'No connectivity and content',
-						toast: true,
-						position: 'top-end',
-						showConfirmButton: false,
-						timer: 6000,
-						timerProgressBar: true,
-						onOpen: (toast) => {
-							toast.addEventListener('mouseenter', Swal.stopTimer)
-							toast.addEventListener('mouseleave', Swal.resumeTimer)
-						}
-					})
+					vm.swalFire('error', 'No Connectivity & Offline Content', 6000)
 				} else {
-					this.$router.push({ name: 'reveal', params: { 'resource': resource } })
+					vm.swalFire('warning', 'Loading Offline Content', 6000)
+					vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
 				}
 			} else {
 				if(!localStorage[resource]){
-					NProgress.start()
-					this.$http.get('/posts/'+resource)
-					.then(function (res) {
-						localStorage[resource] = JSON.stringify(res)
-						NProgress.done()
-						vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
-					})
+					vm.downloadContent(resource)
 				} else {
+					vm.swalFire('info', 'Checking for new content', 6000)
 					var data = JSON.parse(localStorage[resource])
 					this.$http.get('/posts/count/'+resource)
 					.then(function (res) {
 						if(data.data.length === res.data) {
+							vm.swalFire('info', 'Nothing new. Offline content loaded')
 							vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
 						} else {
 							Swal.fire({
@@ -178,6 +184,36 @@ export default {
 					})
 				}
 			}
+		},
+
+		downloadContent: function(resource){
+			var vm = this
+			NProgress.start()
+			this.swalFire('info', 'Downloading Content', 6000)
+			this.$http.get('/posts/'+resource)
+			.then(function (res) {
+				vm.swalFire('info', 'Download Successful')
+				window.console.log(res)
+				localStorage[resource] = JSON.stringify(res)
+				NProgress.done()
+				vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+			}).catch(function (error) {
+					NProgress.done()
+					console.log(error)
+					vm.swalFire('error', 'No Content Available')
+			})
+		},
+
+		swalFire: function(icon, title, timer = 3000, ) {
+			Swal.fire({
+				icon: icon,
+				title: title,
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: timer,
+				timerProgressBar: true,
+			})
 		},
 	}	
 }
