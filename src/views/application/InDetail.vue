@@ -9,33 +9,23 @@
 import navbar from '../../components/Navbar'
 import store from '../../store'
 import Swal from 'sweetalert2'
+
+import firebase from 'firebase'
 export default {
 	name: 'application',
 	components: {
 		navbar
 	},
 	created() {
-		if(store.state.loginsuccess){
-			this.displayConfirmation()
+		var vm = this
+		if (firebase.auth().currentUser && firebase.auth().currentUser.emailVerified) {
+			this.$router.push({ name: 'content' })
+		} else {
+			this.$router.push({ name: 'verifyemail' })
 		}
 	},
 	methods: {
-		displayConfirmation: function(){
-			Swal.fire({
-				icon: 'success',
-				title: 'Signed in successfully',
-				toast: true,
-				position: 'top-end',
-				showConfirmButton: false,
-				timer: 3000,
-				timerProgressBar: true,
-				onOpen: (toast) => {
-					toast.addEventListener('mouseenter', Swal.stopTimer)
-					toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			store.commit('changeloginsuccess')
-		}
+		
 	}
 }
 </script>

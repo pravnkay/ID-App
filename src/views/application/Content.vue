@@ -135,7 +135,7 @@ export default {
 					vm.swalFire('error', 'No Connectivity & Offline Content', 6000)
 				} else {
 					vm.swalFire('warning', 'Loading Offline Content', 6000)
-					vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+					vm.$router.push({ name: 'reveal', params: { 'resource': resource } }).catch(err => {})
 				}
 			} else {
 				if(!localStorage[resource]){
@@ -147,7 +147,7 @@ export default {
 					.then(function (res) {
 						if(data.data.length === res.data) {
 							vm.swalFire('info', 'Nothing new. Offline content loaded')
-							vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+							vm.$router.push({ name: 'reveal', params: { 'resource': resource } }).catch(err => {})
 						} else {
 							Swal.fire({
 								title: 'New Content Available',
@@ -174,10 +174,10 @@ export default {
 									.then(function (res) {
 										localStorage[resource] = JSON.stringify(res)
 										NProgress.done()
-										vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+										vm.$router.push({ name: 'reveal', params: { 'resource': resource } }).catch(err => {})
 									})
 								} else {
-									vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+									vm.$router.push({ name: 'reveal', params: { 'resource': resource } }).catch(err => {})
 								}
 							})
 						}
@@ -196,7 +196,7 @@ export default {
 				window.console.log(res)
 				localStorage[resource] = JSON.stringify(res)
 				NProgress.done()
-				vm.$router.push({ name: 'reveal', params: { 'resource': resource } })
+				vm.$router.push({ name: 'reveal', params: { 'resource': resource } }).catch(err => {})
 			}).catch(function (error) {
 					NProgress.done()
 					console.log(error)

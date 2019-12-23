@@ -37,8 +37,9 @@
 </template>
 
 <script>
-import NProgress from 'nprogress';
-import firebase from "firebase";
+import NProgress from 'nprogress'
+import firebase from "firebase"
+import Swal from 'sweetalert2'
 
 export default {
 	data: function() {
@@ -49,22 +50,47 @@ export default {
 	},
 	methods: {
     register: function(e) {
-      e.preventDefault();
+			e.preventDefault()
+
+			var vm = this
+			vm.swalFire('info', 'Account being created', 2000)
+
 			NProgress.start()
+
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
+						vm.swalFire('success', 'Account Created', 2000)
 						NProgress.done()
-            this.$router.go({ path: this.$router.path });
+						firebase.auth().currentUser.sendEmailVerification().then(function(){
+							vm.swalFire('info', 'Verification mail sent', 2000)
+						});
+            this.$router.push({ name: 'verifyemail' });
           },
           err => {
-            alert(err.message);
+						NProgress.done()
+						vm.swalFire('error', err.message, 2000)
+            console.log(err.message);
           }
 				);
       e.preventDefault();
-    }
+		},
+		
+		swalFire: function(icon, title, timer = 3000, ) {
+			Swal.fire({
+				icon: icon,
+				title: title,
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: timer,
+				timerProgressBar: true,
+			})
+		},
+
+
   }
 }
 </script>

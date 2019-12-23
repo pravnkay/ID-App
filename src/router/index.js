@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import Register from '../views/Register.vue'
 import InDetail from '../views/application/InDetail.vue'
+import VerifyEmail from '../views/application/VerifyEmail.vue'
 import Content from '../views/application/Content.vue'
 import Reveal from '../views/application/Reveal.vue'
 
@@ -54,6 +55,14 @@ const routes = [
 			requiresAuth: true
 		},
       children: [
+        {
+					path: 'verifyemail',
+					name: 'verifyemail',
+          component: VerifyEmail,
+					meta: {
+						requiresAuth: true
+					}
+        },
         {
 					path: 'content',
 					name: 'content',
@@ -110,6 +119,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     // Check if NO logged user
     if (firebase.auth().currentUser) {
+			if ($route.path !== path)
       // Go to login
       next({
         path: '/indetail/content',
