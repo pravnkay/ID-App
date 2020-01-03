@@ -65,7 +65,6 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-						store.commit('changeloginsuccess')
 						NProgress.done()
             this.$router.go({ path: this.$router.path })
           },

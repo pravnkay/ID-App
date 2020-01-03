@@ -10,8 +10,8 @@
 								<b-jumbotron header="InDetail" lead="Account Not Verified">
 									<p class="mb-0">Please check your account for email.</p>
 									<p>If not recieved click below button to resend verification email.</p>
-									<b-button class="mr-3" variant="primary" href="#" @click="sendVerification">Resend Verification Email</b-button>
-									<b-button variant="primary" href="#" @click="proceedtoApp">Proceed to App</b-button>
+									<b-button class="mr-3 mt-3 mt-md-0" variant="primary" href="#" @click="sendVerification">Resend Verification Email</b-button>
+									<b-button class="mt-3 mt-md-0" variant="primary" href="#" @click="proceedtoApp">Proceed to App</b-button>
 								</b-jumbotron>
 							</div>
 

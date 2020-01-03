@@ -5,12 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-		loginsuccess : false
   },
   mutations: {
-		changeloginsuccess(state){
-			state.loginsuccess = !state.loginsuccess
-		}
   },
   actions: {
   },

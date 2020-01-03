@@ -119,7 +119,6 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     // Check if NO logged user
     if (firebase.auth().currentUser) {
-			if ($route.path !== path)
       // Go to login
       next({
         path: '/indetail/content',
