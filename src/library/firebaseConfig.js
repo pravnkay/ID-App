@@ -1,11 +1,11 @@
 export default {
-  apiKey: "AIzaSyD_sqE6bQvWjuToKXjIeLsaLINGhqs_URg",
-  authDomain: "indetail-test-v1.firebaseapp.com",
-  databaseURL: "https://indetail-test-v1.firebaseio.com",
-  projectId: "indetail-test-v1",
-  storageBucket: "indetail-test-v1.appspot.com",
-  messagingSenderId: "705380400344",
-  appId: "1:705380400344:web:bc936606fca230f88e2bad",
-  measurementId: "G-LD6NNRF7SG"
+  apiKey: "AIzaSyAywty4JSKhupzfy00LOfxswNGsLiZlf_k",
+    authDomain: "indetail-affairs.firebaseapp.com",
+    databaseURL: "https://indetail-affairs.firebaseio.com",
+    projectId: "indetail-affairs",
+    storageBucket: "indetail-affairs.appspot.com",
+    messagingSenderId: "1073913642220",
+    appId: "1:1073913642220:web:13ff59cfeafc86493439c9",
+    measurementId: "G-8F8MSSZQSK"
 };
   

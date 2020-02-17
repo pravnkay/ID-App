@@ -98,13 +98,13 @@ export default {
 			],
 			cats: [
 				{id:1, value:'Banking', subcats: 	[
-																						{id:0, value:'All'},
-																						{id:1, value:'RBI'},
-																						{id:2, value:'SBI'}
-																					]},
+														{id:0, value:'All'},
+														{id:1, value:'RBI'},
+														{id:2, value:'SBI'}
+													]},
 				{id:2, value:'Sports', subcats: 	[
-																						{id:0, value:'All'},
-																					]},
+														{id:0, value:'All'},
+													]},
 			],
 			yearSlug: '2018',
 			monthSlug: '00'

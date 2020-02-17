@@ -8,17 +8,17 @@ import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
-const devInstance = createInstance("https://indetail.halfaman.clothing/wp-json/idapi/v1");
+const devInstance = createInstance("https://pravnkay.com/id/wp-json/idapi/v1");
 
 function createInstance(baseURL){
 
 		if(!window.$cookies.isKey('apiAuthToken')){
 			axios.request({
 				method: "post",
-				baseURL: "https://indetail.halfaman.clothing/wp-json/wp/v2/token",
+				baseURL: "https://pravnkay.com/id/wp-json/wp/v2/token",
 				params: {
-					api_key: '2apP0WqdSjk4eBxvqW35PiCIn',
-					api_secret: 'p%NrnTIn*s&c755!6pkSLdZB(UU1*Mgz'
+					api_key: '2bBfbWu8lg6xVtKj4iEFdYP7H',
+					api_secret: '^#FQ#gJTT5FvRiU)b$Z6u#*3%3hR*%Mo'
 				}
 			})
 			.then(function (res) {

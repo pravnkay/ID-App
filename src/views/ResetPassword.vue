@@ -23,7 +23,7 @@
 					</b-row>
 					<b-row align-h="around">
 						<b-col cols="8" lg="4" class="d-flex justify-content-between align-items-center pt-3">
-							<router-link :to="{ name: 'register' }" class="text-primary small">Create Account</router-link>
+							<router-link :to="{ name: 'login' }" class="text-primary small">Login to your account</router-link>
 						</b-col>
 					</b-row>
 				</b-form>
