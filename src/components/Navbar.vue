@@ -28,6 +28,7 @@
 
 <script>
 import firebase from 'firebase'
+import Swal from 'sweetalert2'
 export default {
   name: "Navigation",
   data() {
@@ -45,22 +46,60 @@ export default {
 	},
 	created() {
     if (firebase.auth().currentUser) {
-      this.isLoggedIn = true
+      		this.isLoggedIn = true
 		}
 	},
 	updated() {
 
 	},
 	methods: {
-    logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.go({ path: this.$router.path })
-        })
-		}
-  }
+		logout: function() {
+
+			var vm = this
+
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+					confirmButton: 'btn btn-danger mx-3',
+					cancelButton: 'btn btn-success mx-3'
+				},
+				buttonsStyling: false
+			})
+
+			swalWithBootstrapButtons.fire({
+				title: 'Are you sure?',
+				text: "You need internet to sign-in again",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, Sign Out!',
+				cancelButtonText: 'No, cancel!',
+				reverseButtons: true,
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				focusCancel: true,
+
+			}).then((result) => {
+				if (result.value) {
+					console.log('logginout')
+					firebase
+					.auth()
+					.signOut()
+					.then(() => {
+						vm.$router.push({ path: '/login' })
+					})
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					Swal.fire({
+						icon: 'success',
+						toast: true,
+						title: 'Back to learning',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 1500,
+						timerProgressBar: true,
+					})
+				}
+			})
+		},
+  	}
 };
 </script>
 

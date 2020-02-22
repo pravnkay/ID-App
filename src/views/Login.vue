@@ -59,23 +59,24 @@ export default {
   },
   methods: {
     login: function(e) {
-			NProgress.start()
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-						NProgress.done()
-            this.$router.go({ path: this.$router.path })
-          },
-          err => {
-						NProgress.done()
-            alert(err.message);
-          }
-				);
-			e.preventDefault();
-			
-		},
+		console.log(this)
+		NProgress.start()
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(this.email, this.password)
+			.then(
+				user => {
+					NProgress.done()
+					this.$router.go({ path: this.$router.path })
+				},
+				err => {
+					NProgress.done()
+					alert(err.message);
+				}
+			);
+		e.preventDefault();
+				
+	},
   }
 };
 </script>

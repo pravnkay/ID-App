@@ -52,3 +52,10 @@ $theme-colors: (
 
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
+
+.slim {
+	width: 1rem;
+    height: 1rem;
+	border: 0.10em solid currentColor;
+	border-right-color: transparent;
+}

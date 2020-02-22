@@ -19,9 +19,9 @@ import VueOffline from 'vue-offline'
 Vue.use(VueOffline)
 
 import Unicon from 'vue-unicons'
-import { uniBars, uniHomeAlt, uniAngleLeft, uniAngleDown, uniSearch, uniLink, uniSignOutAlt, uniCheckSquare, uniCheckCircle, uniBooks, uniKeyboardAlt } from 'vue-unicons/src/icons'
+import { uniSignOutAlt } from 'vue-unicons/src/icons'
 
-Unicon.add([uniBars, uniHomeAlt, uniAngleLeft, uniAngleDown, uniSearch, uniLink, uniSignOutAlt, uniCheckSquare, uniCheckCircle, uniBooks, uniKeyboardAlt])
+Unicon.add([uniSignOutAlt])
 Vue.use(Unicon)
 
 import '../node_modules/nprogress/nprogress.css'
@@ -34,11 +34,11 @@ let app
 
 firebase.auth().onAuthStateChanged(function() {
   if (!app) {
-    /* eslint-disable no-new */
+    /* eslint-disable no-new */ 
     app = new Vue({
       router,
       store,
       render: h => h(App)
-		}).$mount('#app')
+    }).$mount('#app')
   }
 })
