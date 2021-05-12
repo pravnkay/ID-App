@@ -13,7 +13,7 @@
     "firebase": "^7.6.1",
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.6.2",
-    "reveal.js": "^3.6.0",
+    "reveal.js": "^3.9.2",
     "sweetalert2": "^9.5.3",
     "vue": "^2.6.10",
     "vue-cookies": "^1.6.1",
